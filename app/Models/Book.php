@@ -19,4 +19,6 @@ class Book extends Model
         'author', 
         'description'
     ];
+
+    
 }

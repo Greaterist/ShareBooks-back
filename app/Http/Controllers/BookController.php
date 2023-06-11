@@ -68,7 +68,7 @@ class BookController extends Controller
                 'img' => $imagePath,
                 'description' => $description,
             ]);
-            return response()->json(['message' => 'Image stored successfully']);
+            return response()->json(['message' => 'Book stored successfully']);
     }
 
     /**
@@ -127,26 +127,5 @@ class BookController extends Controller
             Log::error($exception->getMessage(), $exception->getTrace());
             return response()->json('error', '400');
         }
-    }
-
-
-    public function getBookList()
-    {
-        $bookList = [
-            ["id" => 1, "name" => "book1", "author" => "A", "genre" => '1'],
-            ["id" => 2, "name" => "book2", "author" => "B", "genre" => '2'],
-            ["id" => 3, "name" => "book3", "author" => "C", "genre" => '1'],
-            ["id" => 4, "name" => "book4", "author" => "C", "genre" => '2'],
-        ];
-        return response()->json($bookList);
-    }
-
-    public function getBookSingle(Request $req)
-    {
-        $bookList = [
-            ["id" => 1, "name" => "book1", "author" => "A", "genre" => '1'],
-        ];
-
-        return response()->json($bookList);
     }
 }
