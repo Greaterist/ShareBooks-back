@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('favourites', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('book_id')
-            ->constrained('books', 'id')
-            ->cascadeOnDelete();
             $table->foreignId('user_id')
             ->constrained('users', 'id')
+            ->cascadeOnDelete();
+            $table->foreignId('book_id')
+            ->constrained('books', 'id')
             ->cascadeOnDelete();
             $table->timestamps();
         });
