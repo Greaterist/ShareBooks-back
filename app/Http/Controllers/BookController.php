@@ -17,6 +17,7 @@ class BookController extends Controller
     public function index()
     {
         $books = Book::all();
+        //$books = Book::withCount('favourites')->get();
         return response()->json($books);
     }
 
@@ -35,7 +36,7 @@ class BookController extends Controller
     {
             
             $validatedData = $request->validate([
-                'img' => 'nullable|image',
+                'img' => 'nullable|image|string',
                 'name' => 'required|string',
                 'author' => 'required|string',
                 'description' => 'nullable|string',
@@ -53,7 +54,9 @@ class BookController extends Controller
 
 
                 $imagePath = Storage::url($path);
-            } else {
+            }elseif($request->filled('img') && is_string($request->img))  {
+                $imagePath = $request->img;
+            }else {
                 $imagePath = null;
             }
             $name = $validatedData['name'];
@@ -74,9 +77,12 @@ class BookController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Book $book)
+    public function show($id)
     {
-        //
+         
+         $book = Book::find($id);
+
+         return response()->json($book);
     }
 
     /**
@@ -90,11 +96,11 @@ class BookController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(Request $request, Book $book)
     {
 
         $validatedData = $request->validate([
-            'img' => 'required|image',
+            'img' => 'nullable|image|string',
             'name' => 'required|string',
             'author' => 'required|string',
             'description' => 'nullable|string',

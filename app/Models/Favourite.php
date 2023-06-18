@@ -18,4 +18,8 @@ class Favourite extends Model
     {
         return $this->belongsTo(Book::class);
     }
+
+    public function countFollowers($book_id){
+        return $this->where("book_id", $book_id)->count();
+    }
 }
