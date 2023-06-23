@@ -1,30 +1,30 @@
 ## Current route list
 
-  GET|HEAD        _debugbar/assets/javascript 
-  GET|HEAD        _debugbar/assets/stylesheets 
-  DELETE          _debugbar/cache/{key}/{tags?} 
-  GET|HEAD        _debugbar/clockwork/{id} 
-  GET|HEAD        _debugbar/open 
-  POST            _ignition/execute-solution 
-  GET|HEAD        _ignition/health-check 
-  POST            _ignition/update-config 
-  GET|HEAD        api/books 
-  POST            api/books 
-  GET|HEAD        api/books/{book} 
-  PUT|PATCH       api/books/{book} 
-  DELETE          api/books/{book} 
-  GET|HEAD        api/favourites 
-  POST            api/favourites 
-  GET|HEAD        api/favourites/{favourite} 
-  PUT|PATCH       api/favourites/{favourite} 
-  DELETE          api/favourites/{favourite} 
-  POST            api/login 
-  GET|HEAD        api/logout 
-  POST            api/register 
-  GET|HEAD        api/sanctum/csrf-cookie 
-  GET|HEAD        api/user 
-  GET|HEAD        home 
-  GET|HEAD        sanctum/csrf-cookie 
+GET|HEAD        _debugbar/assets/javascript 
+GET|HEAD        _debugbar/assets/stylesheets 
+DELETE          _debugbar/cache/{key}/{tags?} 
+GET|HEAD        _debugbar/clockwork/{id} 
+GET|HEAD        _debugbar/open 
+POST            _ignition/execute-solution 
+GET|HEAD        _ignition/health-check 
+POST            _ignition/update-config 
+GET|HEAD        api/books 
+POST            api/books 
+GET|HEAD        api/books/{book} 
+PUT|PATCH       api/books/{book} 
+DELETE          api/books/{book} 
+GET|HEAD        api/favourites 
+POST            api/favourites 
+GET|HEAD        api/favourites/{favourite} 
+PUT|PATCH       api/favourites/{favourite} 
+DELETE          api/favourites/{favourite} 
+POST            api/login 
+GET|HEAD        api/logout 
+POST            api/register 
+GET|HEAD        api/sanctum/csrf-cookie 
+GET|HEAD        api/user 
+GET|HEAD        home 
+GET|HEAD        sanctum/csrf-cookie 
 
 
 
