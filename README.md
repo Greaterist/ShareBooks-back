@@ -1,3 +1,31 @@
+## Current Route List
+
+- GET|HEAD        _debugbar/assets/javascript 
+- GET|HEAD        _debugbar/assets/stylesheets 
+- DELETE          _debugbar/cache/{key}/{tags?} 
+- GET|HEAD        _debugbar/clockwork/{id} 
+- GET|HEAD        _debugbar/open 
+- POST            _ignition/execute-solution 
+- GET|HEAD        _ignition/health-check 
+- POST            _ignition/update-config 
+- GET|HEAD        api/books 
+- POST            api/books 
+- GET|HEAD        api/books/{book} 
+- PUT|PATCH       api/books/{book} 
+- DELETE          api/books/{book} 
+- GET|HEAD        api/favourites 
+- POST            api/favourites 
+- GET|HEAD        api/favourites/{favourite} 
+- PUT|PATCH       api/favourites/{favourite} 
+- DELETE          api/favourites/{favourite} 
+- POST            api/login 
+- GET|HEAD        api/logout 
+- POST            api/register 
+- GET|HEAD        api/sanctum/csrf-cookie 
+- GET|HEAD        api/user 
+- GET|HEAD        home 
+- GET|HEAD        sanctum/csrf-cookie 
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
