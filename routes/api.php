@@ -36,3 +36,8 @@ Route::post('/login', [LoginController::class, 'login']);
 
 Route::apiResource('/books', BookController::class);
 Route::apiResource('/favourites', FavouriteController::class);
+
+Route::post('/favourites', [FavouriteController::class, 'store']);
+
+
+Route::post('/recommend', [FavouriteController::class, 'getRecommendationsForId']);
