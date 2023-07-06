@@ -20,7 +20,7 @@
 - DELETE          api/favourites/{favourite}
 - POST            api/recommend 
 - POST            api/login 
-- GET|HEAD        api/logout 
+- POST            api/logout 
 - POST            api/register 
 - GET|HEAD        api/sanctum/csrf-cookie 
 - GET|HEAD        api/user 
