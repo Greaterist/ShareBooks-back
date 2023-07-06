@@ -17,7 +17,8 @@
 - POST            api/favourites 
 - GET|HEAD        api/favourites/{favourite} 
 - PUT|PATCH       api/favourites/{favourite} 
-- DELETE          api/favourites/{favourite} 
+- DELETE          api/favourites/{favourite}
+- POST            api/recommend 
 - POST            api/login 
 - GET|HEAD        api/logout 
 - POST            api/register 

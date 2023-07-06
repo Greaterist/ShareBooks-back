@@ -15,7 +15,8 @@ class FavouriteController extends Controller
      */
     public function index()
     {
-        //
+        $favs = Favourite::all();
+        return response()->json($favs);
     }
 
     /**
@@ -116,13 +117,13 @@ class FavouriteController extends Controller
             ->join('books', 'favourites.book_id', '=', 'books.id')
             ->whereNotIn('favourites.book_id', function ($query)  use ($currentUserId) {
                 $query->select('book_id')->from('favourites')->where('user_id', $currentUserId);
-            }) 
+            })
             ->select('books.id', 'books.name', 'books.author', 'books.img', 'books.description')
             ->groupBy('top_users.fav_count', 'books.id', 'books.name', 'books.author', 'books.img', 'books.description')
             ->orderByDesc('top_users.fav_count')
             ->get()
             ->unique();
-        
+
         return response()->json($result);
     }
 }
