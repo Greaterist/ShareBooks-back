@@ -49,9 +49,12 @@ class FavouriteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Favourite $favourite)
+    public function show($user_id)
     {
-        //
+
+        $favs = Favourite::where('user_id', $user_id)->get();
+
+        return response()->json($favs);
     }
 
     /**
@@ -92,10 +95,10 @@ class FavouriteController extends Controller
         return response()->json(['books' => $books]);
     }
 
-    public function getRecommendationsForId(Request $request)
+    public function getRecommendationsForId($id)
     {
-
-        $currentUserId = $request->id;
+        
+        $currentUserId = $id;
 
         $current_user = DB::table('favourites')
             ->where('favourites.user_id', $currentUserId);
