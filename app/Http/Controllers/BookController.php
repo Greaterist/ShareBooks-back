@@ -82,7 +82,7 @@ class BookController extends Controller
     public function show($id)
     {
 
-        $book = Book::find($id);
+        $book = Book::where('id', $id)->withCount('favourites')->get();
 
         return response()->json($book);
     }
