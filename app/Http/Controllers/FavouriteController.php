@@ -52,7 +52,12 @@ class FavouriteController extends Controller
     public function show($user_id)
     {
 
-        $favs = Favourite::where('user_id', $user_id)->get();
+        //$favs = Favourite::where('user_id', $user_id)->get();
+        $favs = Favourite::join('books', 'favourites.book_id', '=', 'books.id')
+        ->select('favourites.*', 'books.name', 'books.author', 'books.img', 'books.description', )
+        ->where('user_id', $user_id)
+        ->get();
+
 
         return response()->json($favs);
     }
