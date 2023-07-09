@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Laravel\Ui\Presets\React;
 
 class BookController extends Controller
 {
@@ -16,8 +17,8 @@ class BookController extends Controller
      */
     public function index()
     {
-        //$books = Book::all();
-        $books = Book::withCount('favourites')->get();
+        $books = Book::inRandomOrder()->take(18)->get();
+        // $books = Book::withCount('favourites')->get();
 
         return response()->json($books);
     }
@@ -137,5 +138,15 @@ class BookController extends Controller
         }
     }
 
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        $books = Book::where('name', 'LIKE', '%' . $query . '%')
+                        ->orWhere('author', 'LIKE', '%' . $query . '%')
+                        ->get();
+    
+        return response()->json($books);
+    }
     
 }
