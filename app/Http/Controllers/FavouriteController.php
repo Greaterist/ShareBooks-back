@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Category;
 use App\Models\Favourite;
 use Exception;
 use Illuminate\Http\Request;
@@ -55,10 +56,14 @@ class FavouriteController extends Controller
 
         //$favs = Favourite::where('user_id', $user_id)->get();
         $books = Book::withCount('favourites');
+        $categories = Category::all();
         $favs = Favourite::joinSub($books, 'books', function ($join) {
             $join->on('favourites.book_id', '=', 'books.id');
         })
-            ->select('favourites.*', 'books.name', 'books.author', 'books.img', 'books.description', 'books.favourites_count')
+            ->joinSub($categories, 'categories', function ($join) {
+                $join->on('books.category', '=', 'categories.id');
+            })
+            ->select('favourites.*', 'books.name', 'books.author', 'books.img', 'books.description', 'books.favourites_count', 'categories.category')
             ->where('user_id', $user_id)
             ->get();
 
@@ -109,6 +114,7 @@ class FavouriteController extends Controller
         
         $currentUserId = $id;
         $books = Book::withCount('favourites');
+        $categories = Category::all();
         $current_user = DB::table('favourites')
             ->where('favourites.user_id', $currentUserId);
 
@@ -129,11 +135,14 @@ class FavouriteController extends Controller
             ->joinSub($books, 'books', function ($join) {
                 $join->on('favourites.book_id', '=', 'books.id');
             })
+            ->joinSub($categories, 'categories', function ($join) {
+                $join->on('books.category', '=', 'categories.id');
+            })
             ->whereNotIn('favourites.book_id', function ($query)  use ($currentUserId) {
                 $query->select('book_id')->from('favourites')->where('user_id', $currentUserId);
             })
             ->select('books.id', 'books.name', 'books.author', 'books.img', 'books.description', 'books.favourites_count')
-            ->groupBy('top_users.fav_count', 'books.id', 'books.name', 'books.author', 'books.img', 'books.description', 'books.favourites_count')
+            ->groupBy('top_users.fav_count', 'books.id', 'books.name', 'books.author', 'books.img', 'books.description', 'books.favourites_count', 'categories.category')
             ->orderByDesc('top_users.fav_count')
             ->get()
             ->unique();
