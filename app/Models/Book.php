@@ -15,14 +15,17 @@ class Book extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'title', 
+        'id',
+        'name',
+        'img',
         'author', 
-        'description'
+        'description',
+        'category',
+        'ISBN'
     ];
 
     public function favourites()
     {
         return $this->hasMany(Favourite::class);
     }
-    
 }
