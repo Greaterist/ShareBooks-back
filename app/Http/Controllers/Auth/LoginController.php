@@ -46,17 +46,13 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|string',
-            'password' => 'required|string',
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
         ]);
-        if($validator->fails()) {
-            return response()->json(['status' => false, 'message' => 'fix errors', 'errors' => $validator->errors()], 500);
-        }
-    
-        $credentials = $request->only('email', 'password');
         if(Auth::attempt($credentials, $request->filled('remember'))) {
             $accessToken = $request->user()->createToken('authToken')->plainTextToken;
+            $request->session()->regenerate();
             return response()->json([
                 'status' => true, 
                 'user' => Auth::user(), 
