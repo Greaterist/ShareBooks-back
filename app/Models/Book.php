@@ -23,4 +23,9 @@ class Book extends Model
         'category',
         'ISBN'
     ];
+
+    public function favourites()
+    {
+        return $this->hasMany(Favourite::class);
+    }
 }

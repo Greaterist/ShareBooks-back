@@ -38,3 +38,7 @@ Route::get('sanctum/csrf-cookie', function() {
 Route::apiResource('/books', BookController::class);
 Route::apiResource('/favourites', FavouriteController::class);
 
+
+
+Route::get('/recommend/{id}', [FavouriteController::class, 'getRecommendationsForId']);
+

@@ -16,8 +16,9 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Book::all();
-        //$books = Book::withCount('favourites')->get();
+        //$books = Book::all();
+        $books = Book::withCount('favourites')->get();
+
         return response()->json($books);
     }
 
@@ -32,46 +33,47 @@ class BookController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
     {
-            
-            $validatedData = $request->validate([
-                'img' => 'nullable|image|string',
-                'name' => 'required|string',
-                'author' => 'required|string',
-                'description' => 'nullable|string',
-            ]);
 
-            if ($request->hasFile('img')) {
-                $image = $validatedData['img'];
+        $validatedData = $request->validate([
+            'img' => 'nullable|image|string',
+            'name' => 'required|string',
+            'author' => 'required|string',
+            'description' => 'nullable|string',
+        ]);
 
-
-                $extension = $image->getClientOriginalExtension();
-                $filename = Str::uuid() . '.' . $extension;
+        if ($request->hasFile('img')) {
+            $image = $validatedData['img'];
 
 
-                $path = $image->storeAs('/books/images', $filename, 'public');
+            $extension = $image->getClientOriginalExtension();
+            $filename = Str::uuid() . '.' . $extension;
 
 
-                $imagePath = Storage::url($path);
-            }elseif($request->filled('img') && is_string($request->img))  {
-                $imagePath = $request->img;
-            }else {
-                $imagePath = null;
-            }
-            $name = $validatedData['name'];
-            $author = $validatedData['author'];
-            $description = $validatedData['description'];
-            
-            
+            $path = $image->storeAs('/books/images', $filename, 'public');
 
-            Book::create([
-                'name' => $name,
-                'author' => $author,
-                'img' => $imagePath,
-                'description' => $description,
-            ]);
-            return response()->json(['message' => 'Book stored successfully']);
+
+            $imagePath = Storage::url($path);
+        } elseif ($request->filled('img') && is_string($request->img)) {
+            $imagePath = $request->img;
+        } else {
+            $imagePath = null;
+        }
+        $name = $validatedData['name'];
+        $author = $validatedData['author'];
+        $description = $validatedData['description'];
+
+
+
+        Book::create([
+            'name' => $name,
+            'author' => $author,
+            'img' => $imagePath,
+            'description' => $description,
+        ]);
+        return response()->json(['message' => 'Book stored successfully']);
     }
 
     /**
@@ -79,10 +81,10 @@ class BookController extends Controller
      */
     public function show($id)
     {
-         
-         $book = Book::find($id);
 
-         return response()->json($book);
+        $book = Book::where('id', $id)->withCount('favourites')->get();
+
+        return response()->json($book);
     }
 
     /**
@@ -134,4 +136,6 @@ class BookController extends Controller
             return response()->json('error', '400');
         }
     }
+
+    
 }
