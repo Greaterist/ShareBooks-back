@@ -17,7 +17,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Book::take(18)->get()->map(function ($book) {
+        $books = Book::withCount('favourites')->take(18)->get()->map(function ($book) {
             $category = Category::find($book->category);
             $book['category'] = $category->category;
             return $book;
