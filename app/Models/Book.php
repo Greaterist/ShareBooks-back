@@ -20,5 +20,9 @@ class Book extends Model
         'description'
     ];
 
+    public function favourites()
+    {
+        return $this->hasMany(Favourite::class);
+    }
     
 }
