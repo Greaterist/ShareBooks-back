@@ -77,12 +77,13 @@ class RegisterController extends Controller
     {
         $this->validator($request->all())->validate();
         $user = $this->create($request->all());
-        // auth()->login($user);
         Auth::login($user);
+        $accessToken = $request->user()->createToken('authToken')->plainTextToken;
 
         return response()->json([
-            'status' => 'succsess',
-            'user' => $user
+            'status' => 'success',
+            'user' => $user,
+            'access_token' => $accessToken
         ], 201);
     }
 }

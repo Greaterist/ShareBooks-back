@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Client\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -30,7 +32,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    // protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -44,25 +46,31 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|string',
-            'password' => 'required|string',
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
         ]);
-        if($validator->fails()) {
-            return response()->json(['status' => false, 'message' => 'fix errors', 'errors' => $validator->errors()], 500);
+        if(Auth::attempt($credentials, $request->filled('remember'))) {
+            $accessToken = $request->user()->createToken('authToken')->plainTextToken;
+            $request->session()->regenerate();
+            return response()->json([
+                'status' => true, 
+                'user' => Auth::user(), 
+                'access_token' => $accessToken
+            ]);
         }
-        $credentials = $request->only('email', 'password');
-        if(auth()->attempt($credentials, $request->filled('remember'))) {
-            return response()->json(['status' => true, 'user' => auth()->user()]);
-        }
+    
         return response()->json(['status' => false, 'message' => 'invalid username or password'], 500);
     }
 
     public function logout(Request $request)
     {
-        Auth::logout();
+        $cookie1 = Cookie::forget('laravel_session');
+        $cookie2 = Cookie::forget('XSRF-TOKEN');
+        $request->user()->tokens()->delete();
         $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return response()->json(['status' => true, 'message' => 'logged out']);
+    
+        return response()->json(['status' => true, 'm1essage' => 'logged out'])
+            ->withCookie($cookie1)->withCookie($cookie2);
     }
 }
