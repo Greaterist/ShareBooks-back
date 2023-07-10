@@ -149,8 +149,9 @@ class BookController extends Controller
     {
         $query = $request->input('query');
 
-        $books = Book::where('name', 'LIKE', '%' . $query . '%')
-                        ->orWhere('author', 'LIKE', '%' . $query . '%')
+        $books = Book::where('name', 'ILIKE', '%' . $query . '%')
+                        ->orWhere('author', 'ILIKE', '%' . $query . '%')
+                        ->withCount('favourites')
                         ->get();
     
         return response()->json($books);
