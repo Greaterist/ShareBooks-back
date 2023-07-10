@@ -15,6 +15,7 @@ return new class extends Migration
             $table->text('name')->change();
             $table->text('description')->nullable()->change();
             $table->text('author')->change();
+            $table->string('ISBN')->nullable();
             $table->string('category')->nullable();
         });
     }
