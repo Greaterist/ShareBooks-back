@@ -56,7 +56,7 @@ class FavouriteController extends Controller
 
         //$favs = Favourite::where('user_id', $user_id)->get();
         $books = Book::withCount('favourites');
-        $categories = Category::all();
+        $categories = DB::table('books_categories');
         $favs = Favourite::joinSub($books, 'books', function ($join) {
             $join->on('favourites.book_id', '=', 'books.id');
         })
@@ -114,7 +114,7 @@ class FavouriteController extends Controller
         
         $currentUserId = $id;
         $books = Book::withCount('favourites');
-        $categories = Category::all();
+        $categories = DB::table('books_categories');
         $current_user = DB::table('favourites')
             ->where('favourites.user_id', $currentUserId);
 
