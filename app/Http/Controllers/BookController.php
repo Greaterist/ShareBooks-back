@@ -46,6 +46,7 @@ class BookController extends Controller
             'name' => 'required|string',
             'author' => 'required|string',
             'description' => 'nullable|string',
+            'category' => 'required|string'
         ]);
 
         if ($request->hasFile('img')) {
@@ -68,7 +69,7 @@ class BookController extends Controller
         $name = $validatedData['name'];
         $author = $validatedData['author'];
         $description = $validatedData['description'];
-
+        $category = $validatedData['category'];
 
 
         Book::create([
@@ -76,6 +77,7 @@ class BookController extends Controller
             'author' => $author,
             'img' => $imagePath,
             'description' => $description,
+            'category' => $category
         ]);
         return response()->json(['message' => 'Book stored successfully']);
     }
@@ -110,6 +112,7 @@ class BookController extends Controller
             'name' => 'required|string',
             'author' => 'required|string',
             'description' => 'nullable|string',
+            'category' => 'required|string'
         ]);
 
 
@@ -119,12 +122,13 @@ class BookController extends Controller
             return response()->json(['message' => 'Image not found'], 404);
         }
 
-        $model->title = $validatedData['title'];
+        $model->name = $validatedData['name'];
         $model->description = $validatedData['description'];
+        $model->category = $validatedData['category'];
 
         $model->save();
 
-        return response()->json(['message' => 'Image updated successfully']);
+        return response()->json(['message' => 'Book updated successfully']);
     }
 
     /**
